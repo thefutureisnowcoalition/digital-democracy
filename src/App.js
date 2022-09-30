@@ -8,15 +8,13 @@ import SignUp from './components/sign-up/SignUp';
 
 function App() {
   return (
-        <BrowserRouter>
-        <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/comparison"  element={<PoliticianComparison />}/>
-        <Route path="/signup" element={<SignUp />}/>
-        </Routes>
-        </BrowserRouter>
-
-
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/comparison" element={<PoliticianComparison />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

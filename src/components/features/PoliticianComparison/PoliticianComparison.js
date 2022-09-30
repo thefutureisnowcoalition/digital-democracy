@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import {Link} from 'react-router-dom'
+//To be used if propublica url gives no result
+import PlaceholderImage from './images/placeholder.jpg'
+
+import './PoliticianComparison.css'
 
 function PoliticianComparison() {
   //Our state for storing fetched api data
@@ -16,7 +20,7 @@ function PoliticianComparison() {
   //axios used to fetch politician data from api
   async function getPoliticianData () {
     //Api key is exposed - will need to correct before deployment
-    const response = await axios.get('https://api.propublica.org/congress/v1/102/house/members.json', {
+    const response = await axios.get('https://api.propublica.org/congress/v1/117/senate/members.json', {
       headers: {
         "X-API-Key": '8N5NFIfZ4vGdW3Imr72RcIjBHhBhL7xKtRAqx8WK'
       }
@@ -56,36 +60,54 @@ function PoliticianComparison() {
       <div className="row">
         {/* If politicianInfo exists, lets map over it and display a card for each politician */}
         {politicianInfo &&
-          politicianInfo.map((politician) => (
-            <div className="col-12 col-sm-6 col-md-4 mt-5" key={Math.random()}>
-              <div className="card" style={{ textAlign: "center" }}>
-                <h5 className="card-title card-header">
+          politicianInfo.map((politician) => {
+      // Lets set a variable inside of each mapped politician to display a unique ID including the politician.id value from propublica. This corresponds with the ID unitedstates.io is looking for.
+            const imageURL = `https://theunitedstates.io/images/congress/450x550/${politician.id}.jpg`
+
+      //Set some unique background styling for each card component based on their party affiliation
+            if(politician.party === 'R'){
+              var background = 'card card-republican'
+            } else if (politician.party === 'D'){
+               background = 'card card-democrat'
+            } else {
+               background = 'card card-other'
+            }
+            return  <div className="col-12 col-sm-6 col-md-4 col-lg-3 mt-5" key={Math.random()}>
+              <div className={background} style={{ textAlign: "center" }}>
+              <img src={imageURL} onError={
+                ({currentTarget}) => {
+                  currentTarget.onerror = null;
+                  currentTarget.src = PlaceholderImage
+                }
+              }
+                 className="card-img-top" alt="..." />
+                <h5 className="card-title card-header text-white">
                   {politician.first_name} {politician.last_name}
                 </h5>
-                <h5 className="card-subtitle mb-2 mt-1 text-muted">
+                <h5 className="card-subtitle mb-2 mt-1 text-white">
                   Party Affiliation: {politician.party}
                 </h5>
-                <h6 className="card-subtitle mb-2 text-muted">
+                <h6 className="card-subtitle mb-2 text-white">
                   DOB: {politician.date_of_birth}
                 </h6>
-                <h6 className="card-subtitle mb-2 text-muted">
+                <h6 className="card-subtitle mb-2 text-white">
                   State: {politician.state}
                 </h6>
-                <p className="mb-2">
+                <p className="mb-2 text-white">
                   Votes with party %: {politician.votes_with_party_pct}
                 </p>
-                <p className="mb-2">
+                <p className="mb-2 text-white">
                   Votes against party %: {politician.votes_against_party_pct}
                 </p>
                 {/* Display url if applicable */}
                 {politician.url && (
                   <p className="mb-2">
-                    Url: <a href={politician.url}>{politician.url}</a>
+                  <a href={politician.url} className="text-info">Website</a>
                   </p>
                 )}
               </div>
             </div>
-          ))}
+})}
       </div>
     </div>
   );
