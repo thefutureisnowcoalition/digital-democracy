@@ -36,6 +36,11 @@ function Home() {
                 Politician Comparison
               </Link>
             </li>
+            <li className="list-group-item">
+              <Link className="link-info" to="/civics">
+                Google Civics
+              </Link>
+            </li>
           </ul>
         </div>
 
