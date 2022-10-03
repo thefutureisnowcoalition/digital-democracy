@@ -7,7 +7,7 @@ function Nav() {
     <nav className="nav">
       <NavLink to="/" className="navlinks">Home</NavLink>
       <NavLink to="" className="navlinks">About Us</NavLink>
-      <NavLink to="" className="navlinks">Sign In</NavLink>
+      <NavLink to="/comparison" className="navlinks">P.C.F</NavLink>
     </nav>
   )
 }
