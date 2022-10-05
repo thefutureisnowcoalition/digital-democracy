@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 //To be used if propublica url gives no result
 import PlaceholderImage from './images/placeholder.jpg'
 
@@ -9,27 +9,61 @@ import './PoliticianComparison.css'
 function PoliticianComparison() {
   //Our state for storing fetched api data
   const [politicianInfo, setPoliticianInfo] = useState([])
+
+    //Retrieve our url search parameters
+    let {search} = useParams();
+
+
   //Fires when component is first rendered
   useEffect(() => {
     getPoliticianData()
-  }, [])
+  }, [search])
 
 
 
+  
 
-  //axios used to fetch politician data from api
-  async function getPoliticianData() {
-    //Api key is exposed - will need to correct before deployment
-    const response = await axios.get('https://api.propublica.org/congress/v1/117/senate/members.json', {
-      headers: {
-        "X-API-Key": '8N5NFIfZ4vGdW3Imr72RcIjBHhBhL7xKtRAqx8WK'
-      }
-    })
-    //Navigate through JSON response to get politician information
-    const politicianData = response.data.results[0].members;
-    setPoliticianInfo(politicianData)
 
-  }
+async function getPoliticianData(){
+  //Our first request is to propublicas senator database
+  const requestOne = axios.get('https://api.propublica.org/congress/v1/117/senate/members.json', {
+    headers: {
+      "X-API-Key": '8N5NFIfZ4vGdW3Imr72RcIjBHhBhL7xKtRAqx8WK'
+    }
+  })
+  //Our second request is to probublicas house database
+  const requestTwo = axios.get('https://api.propublica.org/congress/v1/117/house/members.json', {
+    headers: {
+      "X-API-Key": '8N5NFIfZ4vGdW3Imr72RcIjBHhBhL7xKtRAqx8WK'
+    }
+  })
+
+  //We need to use axios.all to combine our two requests and then spread the responses into one....
+  axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
+   const response = [...responses[0].data.results[0].members, ...responses[1].data.results[0].members];
+
+  
+  //If a search parameter is present in the URL, we need to sort our response to pull that politician to the very top
+   if(search){
+    response.sort((a, b) => {
+          let wholenameA = a.first_name.toLowerCase() + ' ' + a.last_name.toLowerCase()
+          let wholenameB = b.first_name.toLowerCase() + ' ' + b.last_name.toLowerCase()
+      // Sort results by matching name with keyword position in name
+      if(wholenameA.toLowerCase().indexOf(search.toLowerCase()) > wholenameB.toLowerCase().indexOf(search.toLowerCase())) {
+          return -1;
+      } else if (wholenameA.toLowerCase().indexOf(search.toLowerCase()) < wholenameB.toLowerCase().indexOf(search.toLowerCase())) {
+         return  1;
+      } 
+      return
+    
+  } 
+
+    )
+}
+setPoliticianInfo(response)
+  }))
+}
+
 
 
   return (
@@ -72,7 +106,9 @@ function PoliticianComparison() {
             } else {
               background = 'card card-other'
             }
-            return <div className="col-12 col-sm-6 col-md-4 col-lg-3 mt-5" key={Math.random()}>
+            return <div className="col-12 card mt-3" key={Math.random()}>
+              <div className="row">
+              <div className="col-3">
               <div className={background} style={{ textAlign: "center" }}>
                 <img src={imageURL} onError={
                   ({ currentTarget }) => {
@@ -82,30 +118,40 @@ function PoliticianComparison() {
                 }
                   className="card-img-top" alt="..." />
                 <h5 className="card-title card-header text-white">
+                  View Full Profile
+                </h5>
+              </div>
+              </div>
+              <div className="col-3 mt-5">
+              <h2>
                   {politician.first_name} {politician.last_name}
-                </h5>
-                <h5 className="card-subtitle mb-2 mt-1 text-white">
-                  Party Affiliation: {politician.party}
-                </h5>
-                <h6 className="card-subtitle mb-2 text-white">
+                </h2>
+                <h6 className="mt-2 text-muted">
                   DOB: {politician.date_of_birth}
                 </h6>
-                <h6 className="card-subtitle mb-2 text-white">
-                  State: {politician.state}
+                <h6 className="mt-2 text-muted">
+                  Party Affiliation: {politician.party}
                 </h6>
-                <p className="mb-2 text-white">
-                  Votes with party %: {politician.votes_with_party_pct}
-                </p>
-                <p className="mb-2 text-white">
-                  Votes against party %: {politician.votes_against_party_pct}
-                </p>
-                {/* Display url if applicable */}
-                {politician.url && (
+                <h5 className="mt-2 text-muted">
+                  State: {politician.state}
+                </h5>
+                                {/* Display url if applicable */}
+                                {politician.url && (
                   <p className="mb-2">
                     <a href={politician.url} className="text-info">Website</a>
                   </p>
                 )}
-              </div>
+              
+                </div>
+                <div className="col-6" style={{textAlign: 'center', paddingTop: '90px'}}>
+                <p className="mb-2 text-muted">
+                  Votes with party %: {politician.votes_with_party_pct}
+                </p>
+                <p className="mb-2 text-muted">
+                  Votes against party %: {politician.votes_against_party_pct}
+                </p>
+                  </div>
+                </div>
             </div>
           })}
       </div>

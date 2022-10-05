@@ -14,9 +14,12 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/comparison" element={<PoliticianComparison />} />
+        <Route path="/comparison/" element={<PoliticianComparison />} />
+        <Route path="/comparison/:search" element={<PoliticianComparison />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/civics" element={<GoogleCivics />} />
+        <Route path="/civics/" element={<GoogleCivics />} />
+        <Route path="/civics/:address" element={<GoogleCivics />} />
+
       </Routes>
     </BrowserRouter>
   );
