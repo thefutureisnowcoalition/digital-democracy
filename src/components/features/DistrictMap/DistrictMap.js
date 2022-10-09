@@ -90,8 +90,8 @@ function DistrictMap({locationString = "None"}) {
 
 
     return (
-        <div>
-            <h3>Distict Map</h3>
+        <div className="mt-3" style={{textAlign: 'center'}}>
+            <h3>District Map</h3>
             <div className="sidebar">
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>
