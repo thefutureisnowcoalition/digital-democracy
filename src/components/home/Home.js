@@ -41,6 +41,11 @@ function Home() {
                 Google Civics
               </Link>
             </li>
+            <li className="list-group-item">
+              <Link className="link-info" to="/districtmap">
+                District Map
+              </Link>
+            </li>
           </ul>
         </div>
 

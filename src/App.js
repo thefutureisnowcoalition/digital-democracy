@@ -7,6 +7,7 @@ import PoliticianComparison from './components/features/PoliticianComparison/Pol
 import SignUp from './components/sign-up/SignUp';
 import GoogleCivics from './components/features/GoogleCivics/GoogleCivics';
 import Nav from './components/Nav/Nav'
+import DistrictMap from './components/features/DistrictMap/DistrictMap';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/civics/" element={<GoogleCivics />} />
         <Route path="/civics/:address" element={<GoogleCivics />} />
+        <Route path="/districtmap" element={<DistrictMap />} />
 
       </Routes>
     </BrowserRouter>
