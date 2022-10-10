@@ -46,6 +46,11 @@ function Home() {
                 District Map
               </Link>
             </li>
+            <li className="list-group-item">
+              <Link className="link-info" to="/stripe">
+                Stripe
+              </Link>
+            </li>
           </ul>
         </div>
 

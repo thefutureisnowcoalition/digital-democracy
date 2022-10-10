@@ -8,6 +8,7 @@ import SignUp from './components/sign-up/SignUp';
 import GoogleCivics from './components/features/GoogleCivics/GoogleCivics';
 import Nav from './components/Nav/Nav'
 import DistrictMap from './components/features/DistrictMap/DistrictMap';
+import Stripe from './components/features/StripeIntegration/StripeIntegration'
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         <Route path="/civics/" element={<GoogleCivics />} />
         <Route path="/civics/:address" element={<GoogleCivics />} />
         <Route path="/districtmap" element={<DistrictMap />} />
-
+        <Route path="/stripe" element={<Stripe />} />
       </Routes>
     </BrowserRouter>
   );
