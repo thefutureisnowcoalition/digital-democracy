@@ -9,3 +9,12 @@
 .navlinks:hover {
   text-decoration: underline;
 }
+
+.searchbarstyle {
+  margin-left: 50px;
+  display: inline;
+  width: 30%;
+  min-width: 230px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
