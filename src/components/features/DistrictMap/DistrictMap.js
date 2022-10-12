@@ -3,7 +3,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import data from "./gz_2010_us_500_11_5m.geojson";
+import data from "./gz_2010_us_500_11_5m_processed.json";
 
 //The following line prevents issues in production
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -20,6 +20,7 @@ function DistrictMap({locationString = "None"}) {
     const [lng, setLng] = useState(-98.6);
     const [lat, setLat] = useState(39.8);
     const [zoom, setZoom] = useState(3);
+
 
     useEffect(() => {
         const map = new mapboxgl.Map({
@@ -47,6 +48,17 @@ function DistrictMap({locationString = "None"}) {
                     'line-color': '#0080ff',
                     'line-width': 3
                     }
+                }
+            );
+
+            map.addLayer(
+                {
+                id: 'districts-label',
+                type: 'symbol',
+                source: 'districts',
+                layout: {
+                    'text-field': ['concat', ['get', 'STATE'], '-', ['get', 'CD']]
+                }
                 }
             );
             
