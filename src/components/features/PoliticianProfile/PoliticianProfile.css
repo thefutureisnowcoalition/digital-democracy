@@ -1,0 +1,26 @@
+.avatarstyle {
+    box-shadow: 8px 8px 5px;
+}
+
+
+.repbackground{
+    background-image: url(./images/repbackground.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+.dembackground{
+    background-image: url(./images/dembackground.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+.namefont {
+    font-weight: bold;
+    font-size: 80px;
+}
+
