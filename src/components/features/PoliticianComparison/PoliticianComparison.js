@@ -9,6 +9,7 @@ import './PoliticianComparison.css'
 function PoliticianComparison() {
   //Our state for storing fetched api data
   const [politicianInfo, setPoliticianInfo] = useState([])
+  const [work, setWork] = useState(null)
 
     //Retrieve our url search parameters
     let {search} = useParams();
@@ -21,7 +22,10 @@ function PoliticianComparison() {
 
 
 
-  
+  function showNames(){
+    setWork(politicianInfo.map((politician => console.log(`{ name: \'${politician.first_name} ${politician.last_name}\' },`))))
+    console.log(politicianInfo)
+  }
 
 
 async function getPoliticianData(){
@@ -90,8 +94,10 @@ setPoliticianInfo(response)
         <Link className="link-primary" to="/">
           Return Home
         </Link>
+        <button onClick={showNames}>Click for data</button>
       </div>
       <div className="row">
+        <p>{work}</p>
         {/* If politicianInfo exists, lets map over it and display a card for each politician */}
         {politicianInfo &&
           politicianInfo.map((politician) => {

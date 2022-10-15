@@ -238,11 +238,14 @@ function PoliticianProfile() {
                         }}
                       >
                         <h1
-                          className="mt-3 namefont mb-5"
+                          className="mt-3 namefont mb-3"
                           style={{ textAlign: "center" }}
                         >
                           {politician.first_name} {politician.last_name}
                         </h1>
+                        <h2 className="mt-2" style={{ textAlign: "center" }}>
+                         {politician.title}
+                        </h2>
                         <h3 className="mt-2" style={{ textAlign: "center" }}>
                           DOB: {politician.date_of_birth}
                         </h3>
@@ -351,6 +354,7 @@ function PoliticianProfile() {
                     className="col-12 col-lg-6 mt-3 mb-3"
                     style={{ textAlign: "center", margin: "auto" }}
                   >
+                    
                     <TwitterTimelineEmbed
                       sourceType="profile"
                       screenName={politician.twitter_account}
@@ -369,8 +373,8 @@ function PoliticianProfile() {
                       height="600"
                       style={{ border: "none", overflow: "hidden" }}
                       scrolling="no"
-                      frameborder="0"
-                      allowfullscreen="true"
+                      frameBorder="0"
+                      allowFullScreen={true}
                       allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                     ></iframe>
                     <div className="mt-3">
