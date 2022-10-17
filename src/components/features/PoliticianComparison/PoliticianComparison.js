@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom'
+import CanvasJSReact from '../../../lib/canvasjs-3.7.1/canvasjs.react'
 //To be used if propublica url gives no result
 import PlaceholderImage from './images/placeholder.jpg'
 
 import './PoliticianComparison.css'
+
+// Variables for showing the chart for the bills voted for vs against
+var CanvasJS =  CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+
 
 function PoliticianComparison() {
   //Our state for storing fetched api data
@@ -60,6 +67,24 @@ async function getPoliticianData(){
 }
 setPoliticianInfo(response)
   }))
+
+  const options = {
+    animaitonEnabled: true,
+    exportEnabled:true,
+    theme:"light1",
+    title:{
+      text: "Voted Within Party Vs. Outside"
+    },
+    data: [{
+      type:"pie",
+      indexLabel: "{label}:{y}%",
+      startAngle: -90,
+      dataPoints: [
+        { y:20, label: "Votes with party" },
+        { y:20, label: "Votes with party" }
+      ]
+    }]
+  }
 }
 
 
@@ -143,6 +168,10 @@ setPoliticianInfo(response)
               
                 </div>
                 <div className="col-6" style={{textAlign: 'center', paddingTop: '90px'}}>
+                
+                
+              
+                 
                 <p className="mb-2 text-muted">
                   Votes with party %: {politician.votes_with_party_pct}
                 </p>
@@ -150,7 +179,12 @@ setPoliticianInfo(response)
                   Votes against party %: {politician.votes_against_party_pct}
                 </p>
                   </div>
+                  <div>
+                    <CanvasJSChart options = {options}
+                    />
+                    </div>
                 </div>
+
             </div>
           })}
       </div>

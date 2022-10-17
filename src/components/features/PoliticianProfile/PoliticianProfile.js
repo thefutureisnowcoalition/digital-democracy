@@ -4,10 +4,14 @@ import { useParams } from "react-router-dom";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 //To be used if propublica url gives no result
 import PlaceholderImage from "../PoliticianComparison/images/placeholder.jpg";
-
+import CanvasJSReact from '../../../lib/canvasjs-3.7.1/canvasjs.react'
 import "./PoliticianProfile.css";
 
 function PoliticianProfile() {
+
+  var CanvasJS =  CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
   //Our state for storing fetched api data
   const [politicianInfo, setPoliticianInfo] = useState([]);
 
@@ -20,7 +24,7 @@ function PoliticianProfile() {
   }, [search]);
 
   async function getPoliticianData() {
-    //Our first request is to propublicas senator database
+    //Our first request is to propublicas senator `database`
     const requestOne = axios.get(
       "https://api.propublica.org/congress/v1/117/senate/members.json",
       {
@@ -73,6 +77,26 @@ function PoliticianProfile() {
       })
     );
   }
+
+
+  const options = {
+    animaitonEnabled: true,
+    exportEnabled:true,
+    theme:"light1",
+    title:{
+      text: "Voted Within Party Vs. Outside"
+    },
+    data: [{
+      type:"pie",
+      indexLabel: "{label}:{y}%",
+      startAngle: -90,
+      dataPoints: [
+        { y:`${politician.votes_with_party_pct}`, label: "Votes with party" },
+        { y:`${politician.votes_against_party_pct}`, label: "Votes against party" }
+      ]
+    }]
+  }
+
 
   //remove all politicians from our array except for the very top one that we've filtered
   politicianInfo.length = 1;
@@ -310,6 +334,12 @@ function PoliticianProfile() {
                                 </span>
                               </h5>
                             </div>
+                            <div>
+                  
+                    <CanvasJSChart options = {options}
+                    />
+                    </div>
+
                             <div className="col-12 col-lg-6 mt-4">
                               <h5
                                 className="mt-3"
