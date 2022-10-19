@@ -5,11 +5,11 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './components/home/Home';
 import PoliticianComparison from './components/features/PoliticianComparison/PoliticianComparison';
 import SignUp from './components/sign-up/SignUp';
-import GoogleCivics from './components/features/GoogleCivics/GoogleCivics';
-import PoliticianProfile from './components/features/PoliticianProfile/PoliticianProfile';
+import Dashboard from './components/features/Dashboard/Dashboard';
+import PoliticianProfile from './components/features/PoliticianProfile/ProfileFull';
 import Nav from './components/Nav/Nav'
-import DistrictMap from './components/features/DistrictMap/DistrictMap';
-import Stripe from './components/features/StripeIntegration/StripeIntegration'
+import DistrictMapPage from './components/features/DistrictMap/DistrictMapPage';
+import Donations from './components/features/Donations/Donations';
 
 function App() {
   return (
@@ -18,12 +18,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/comparison/" element={<PoliticianComparison />} />
-        <Route path="/comparison/:search" element={<PoliticianProfile />} />
+        <Route path="/profile/:search" element={<PoliticianProfile />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/civics/" element={<GoogleCivics />} />
-        <Route path="/civics/:address" element={<GoogleCivics />} />
-        <Route path="/districtmap" element={<DistrictMap />} />
-        <Route path="/stripe" element={<Stripe />} />
+        <Route path="/dashboard/" element={<Dashboard />} />
+        <Route path="/dashboard/:address" element={<Dashboard />} />
+        <Route path="/districtmap" element={<DistrictMapPage />} />
+        <Route path="/donations" element={<Donations />} />
       </Routes>
     </BrowserRouter>
   );

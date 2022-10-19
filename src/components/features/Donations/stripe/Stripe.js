@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './StripeIntegration.css'
 
-class StripeTutorial extends Component {
+
+class Stripe extends Component {
   pay = (amount) => {
     var handler = window.StripeCheckout.configure({
       key: 'pk_test_51LqQzrBmzI5NiTvrWMD337HyXfci0EecxgTxGPiWJHzZilU53xiRz94kCVBHFl8zbbUUJ8LkIU5VH68hOYtFzloo00Cp9oceRG',
       locale: 'auto',
-      token: function (token: any) {
+      token: function (token) {
         // You can access the token ID with `token.id`.
         // Get the token ID to your server-side code for use.
         console.log(token)
@@ -61,4 +61,4 @@ class StripeTutorial extends Component {
   }
 }
  
-export default StripeTutorial;
+export default Stripe;
