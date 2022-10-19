@@ -9,6 +9,7 @@ import Dashboard from './components/features/Dashboard/Dashboard';
 import PoliticianProfile from './components/features/PoliticianProfile/ProfileFull';
 import Nav from './components/Nav/Nav'
 import DistrictMapPage from './components/features/DistrictMap/DistrictMapPage';
+import DistrictMapTwo from './components/features/DistrictMap/mapcomponent/DistrictMap';
 import Donations from './components/features/Donations/Donations';
 
 function App() {

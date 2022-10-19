@@ -7,7 +7,7 @@ var states = importStates.states;
 const fs = require('fs')
 
 // read JSON object from file
-fs.readFile('gz_2010_us_500_11_5m.json', 'utf-8', (err, data) => {
+fs.readFile('merged.json', 'utf-8', (err, data) => {
   if (err) {
     throw err
   }
@@ -17,12 +17,12 @@ fs.readFile('gz_2010_us_500_11_5m.json', 'utf-8', (err, data) => {
 
 
   for (const feature of processedData.features){
-    feature.properties.STATE = states.find(state => state.FIPS == feature.properties.STATE).USPS;
+    feature.properties.STATEFP = states.find(state => state.FIPS == feature.properties.STATEFP).USPS;
   }
 
   const exportData = JSON.stringify(processedData);
 
-  fs.writeFile('gz_2010_us_500_11_5m_processed.json', exportData, err => {
+  fs.writeFile('merged_2022_sldu_processed.json', exportData, err => {
     if (err) {
       throw err
     }

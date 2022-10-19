@@ -6,7 +6,7 @@ import RepresentativeMap from "./representatives/RepresentativeMap";
 //The below line prevents some errors associated with the google client authentication
 /* global gapi */
 
-function GoogleCivics() {
+function Dashboard() {
   const [userLocationInfo, setUserLocationInfo] = useState(null);
 
 
@@ -20,14 +20,7 @@ function GoogleCivics() {
   let { address } = useParams();
 
   useEffect(() => {
-    authenticateGoogleClient();
-  }, [address]);
-
-
-  //1st step in Google API authentication process. Must be completed before we can do any requests.
-  gapi.load("client");
-
-  //Authenticate our client through google using our API Key
+      //Authenticate our client through google using our API Key
   function authenticateGoogleClient() {
     if (gapi.client) {
       //API Key is exposed! (And is a personal key) Will need to fix this before launch
@@ -60,30 +53,40 @@ function GoogleCivics() {
     }
   }
 
-    //After the client is loaded, fetch the civics data via Google.
-    function fetchCivics(levels, roles, setData) {
-      return gapi.client.civicinfo.representatives
-        .representativeInfoByAddress({
-          address: address,
-          includeOffices: true,
-          levels: [levels],
-          roles: [roles],
-        })
-        .then(
-          function (response) {
-            // Handle the results here (response.result has the parsed body).
-            setData(response.result);
-            //With this particular data fetch, Lets go ahead and also store googles formatted address information in a local variable so we can display it back to the user.
-            if(!userLocationInfo){
-              setUserLocationInfo(response.result.normalizedInput);
+      //After the client is loaded, fetch the civics data via Google.
+      function fetchCivics(levels, roles, setData) {
+        return gapi.client.civicinfo.representatives
+          .representativeInfoByAddress({
+            address: address,
+            includeOffices: true,
+            levels: [levels],
+            roles: [roles],
+          })
+          .then(
+            function (response) {
+              // Handle the results here (response.result has the parsed body).
+              setData(response.result);
+              //With this particular data fetch, Lets go ahead and also store googles formatted address information in a local variable so we can display it back to the user.
+              if(!userLocationInfo){
+                setUserLocationInfo(response.result.normalizedInput);
+              }
+            },
+            function (err) {
+              console.error("Execute error", err);
+              window.location.replace("/");
             }
-          },
-          function (err) {
-            console.error("Execute error", err);
-            window.location.replace("/");
-          }
-        );
-    }
+          );
+      }
+    authenticateGoogleClient();
+  }, [address]);
+
+
+  //1st step in Google API authentication process. Must be completed before we can do any requests.
+  gapi.load("client");
+
+
+
+
 
 
   return (
@@ -101,4 +104,4 @@ function GoogleCivics() {
   );
 }
 
-export default GoogleCivics;
+export default Dashboard;
