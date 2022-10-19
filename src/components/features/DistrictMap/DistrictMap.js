@@ -3,7 +3,9 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import data from "./gz_2010_us_500_11_5m_processed.json";
+import data from "./tl_2022_us_cd116_processed_simplified.json";
+import statelower from "./merged_2022_sldl_processed_simplified.json";
+import stateupper from "./merged_2022_sldu_processed_simplified.json";
 
 //The following line prevents issues in production
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -22,6 +24,7 @@ function DistrictMap({locationString = "None"}) {
     const [zoom, setZoom] = useState(3);
 
 
+
     useEffect(() => {
         const map = new mapboxgl.Map({
             container: mapContainer.current,
@@ -32,8 +35,8 @@ function DistrictMap({locationString = "None"}) {
 
         map.on('load', () => {
 
-
-            // Add source and layer for congressional districts
+            
+            // Add source and layer for US congressional districts
             map.addSource('districts', {
                 type: 'geojson',
                 data
@@ -45,7 +48,7 @@ function DistrictMap({locationString = "None"}) {
                 type: 'line',
                 source: 'districts',
                 paint: {
-                    'line-color': '#0080ff',
+                    'line-color': '#0000ff',
                     'line-width': 3
                     }
                 }
@@ -57,10 +60,77 @@ function DistrictMap({locationString = "None"}) {
                 type: 'symbol',
                 source: 'districts',
                 layout: {
-                    'text-field': ['concat', ['get', 'STATE'], '-', ['get', 'CD']]
+                    'text-field': ['concat', ['get', 'STATEFP'], '-', ['get', 'CD116FP']]
                 }
                 }
             );
+
+            // add source layer for state legislative districts lower
+            map.addSource('statelower', {
+                type: 'geojson',
+                data: statelower
+            });
+
+            map.addLayer(
+                {
+                id: 'statelower-outline',
+                type: 'line',
+                source: 'statelower',
+                paint: {
+                    'line-color': '#ff0000',
+                    'line-width': 3
+                    }
+                }
+            );
+
+            map.addLayer(
+                {
+                id: 'statelower-label',
+                type: 'symbol',
+                source: 'statelower',
+                layout: {
+                    'text-field': ['concat', ['get', 'STATEFP'], '-', ['get', 'SLDLST']]
+                }
+                }
+            );
+
+            // add source layer for state legislative districts upper
+            map.addSource('stateupper', {
+                type: 'geojson',
+                data: stateupper
+            });
+
+            map.addLayer(
+                {
+                id: 'stateupper-outline',
+                type: 'line',
+                source: 'stateupper',
+                paint: {
+                    'line-color': '#00ff00',
+                    'line-width': 3
+                    }
+                }
+            );
+
+            map.addLayer(
+                {
+                id: 'stateupper-label',
+                type: 'symbol',
+                source: 'stateupper',
+                layout: {
+                    'text-field': ['concat', ['get', 'STATEFP'], '-', ['get', 'SLDLST']]
+                }
+                }
+            );
+
+            // set default layer visibility to U.S. congress
+            map.setLayoutProperty("districts-outline", "visibility", "visible");
+            map.setLayoutProperty("districts-label", "visibility", "visible");
+            map.setLayoutProperty("statelower-outline", "visibility", "none");
+            map.setLayoutProperty("statelower-label", "visibility", "none");
+            map.setLayoutProperty("stateupper-outline", "visibility", "none");
+            map.setLayoutProperty("stateupper-label", "visibility", "none");
+
             
             if (locationString != "None") {
                 const location = locationString;
@@ -104,6 +174,34 @@ function DistrictMap({locationString = "None"}) {
         
     }, []);
 
+    const handleClick = e => {
+        if (map){
+            // hide all layers
+            map.setLayoutProperty("districts-outline", "visibility", "none");
+            map.setLayoutProperty("districts-label", "visibility", "none");
+            map.setLayoutProperty("statelower-outline", "visibility", "none");
+            map.setLayoutProperty("statelower-label", "visibility", "none");
+            map.setLayoutProperty("stateupper-outline", "visibility", "none");
+            map.setLayoutProperty("stateupper-label", "visibility", "none");
+            // show clicked layer
+            if (e.target.textContent == "U.S. Congress"){
+                map.setLayoutProperty("districts-outline", "visibility", "visible");
+                map.setLayoutProperty("districts-label", "visibility", "visible");
+            };
+            if (e.target.textContent == "State House"){
+                map.setLayoutProperty("statelower-outline", "visibility", "visible");
+                map.setLayoutProperty("statelower-label", "visibility", "visible");
+            };
+            if (e.target.textContent == "State Senate"){
+                map.setLayoutProperty("stateupper-outline", "visibility", "visible");
+                map.setLayoutProperty("stateupper-label", "visibility", "visible");
+            };
+            setMap(map);
+        };
+        e.preventDefault();
+    };
+
+
 
     return (
         <div className="mt-3" style={{textAlign: 'center'}}>
@@ -112,6 +210,9 @@ function DistrictMap({locationString = "None"}) {
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>
             <div ref={mapContainer} className="map-container" style={{height: "400px" }}/>
+            <button type="button" onClick={handleClick}>U.S. Congress</button>
+            <button type="button" onClick={handleClick}>State House</button>
+            <button type="button" onClick={handleClick}>State Senate</button>
         </div>
      );
 }
