@@ -37,8 +37,13 @@ function Home() {
               </Link>
             </li>
             <li className="list-group-item">
-              <Link className="link-info" to="/civics">
-                Google Civics
+              <Link className="link-info" to="/profile/Ted%20Cruz">
+                Politician Profile
+              </Link>
+            </li>
+            <li className="list-group-item">
+              <Link className="link-info" to="/dashboard">
+                Dashboard
               </Link>
             </li>
             <li className="list-group-item">
@@ -47,10 +52,11 @@ function Home() {
               </Link>
             </li>
             <li className="list-group-item">
-              <Link className="link-info" to="/stripe">
-                Stripe
+              <Link className="link-info" to="/donations">
+                Donations
               </Link>
             </li>
+
           </ul>
         </div>
 
