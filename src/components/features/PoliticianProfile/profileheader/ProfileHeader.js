@@ -4,11 +4,11 @@ import PlaceholderImage from "../../PoliticianComparison/images/placeholder.jpg"
 
 function ProfileHeader({ politician}) {
   // Lets set a variable inside of each mapped politician to display a unique ID including the politician.id value from propublica. This corresponds with the ID unitedstates.io is looking for.
-  const imageURL = `https://theunitedstates.io/images/congress/450x550/${politician.id}.jpg`;
+  const imageURL = politician.image;
 
-  const twitterURL = `https://twitter.com/${politician.twitter_account}`;
-  const facebookURL = `https://facebook.com/${politician.facebook_account}`;
-  const youtubeURL = `https://youtube.com/${politician.youtube_account}`;
+  const twitterURL = `https://twitter.com/${politician.twitter}`;
+  const facebookURL = `https://facebook.com/${politician.facebook}`;
+  const youtubeURL = `https://youtube.com/${politician.youtube}`;
   return (
     <div className="col-sm-12 col-md-4">
       <div style={{ textAlign: "center" }}>

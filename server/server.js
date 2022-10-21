@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8000;
 //Our MongoDB connection URI - Will need to be hidden in production! Contains our Login Name, Password, and directs us to the "Politicians" database.
 const MONGODB_URI = 'mongodb+srv://FincAdmin:DemocracyBackend135@digitaldemocracy.5lhi6nx.mongodb.net/Politicians?retryWrites=true&w=majority'
 
-
+const routes = require('../src/routes/api')
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -27,6 +27,6 @@ app.use(cors());
 
 // HTTP request logger
 app.use(morgan('tiny'));
-
+app.use('/', routes);
 
 app.listen(PORT, console.log(`Server is starting at ${PORT}`));

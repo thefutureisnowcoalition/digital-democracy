@@ -8,68 +8,23 @@ import "./PoliticianComparison.css";
 function PoliticianComparison() {
   //Our state for storing fetched api data
   const [politicianInfo, setPoliticianInfo] = useState([]);
-  //Retrieve our url search parameters
-  let { search } = useParams();
+
 
   //Fires when component is first rendered
   useEffect(() => {
-    getPoliticianData();
-  }, [search]);
+    fetchPoliticians();
+  }, []);
 
-  async function getPoliticianData() {
-    //Our first request is to propublicas senator database
-    const requestOne = axios.get(
-      "https://api.propublica.org/congress/v1/117/senate/members.json",
-      {
-        headers: {
-          "X-API-Key": "8N5NFIfZ4vGdW3Imr72RcIjBHhBhL7xKtRAqx8WK",
-        },
-      }
-    );
-    //Our second request is to probublicas house database
-    const requestTwo = axios.get(
-      "https://api.propublica.org/congress/v1/117/house/members.json",
-      {
-        headers: {
-          "X-API-Key": "8N5NFIfZ4vGdW3Imr72RcIjBHhBhL7xKtRAqx8WK",
-        },
-      }
-    );
+  function fetchPoliticians(){
+  
+    const url = `http://localhost:8000/api`
+    setPoliticianInfo([])
 
-    //We need to use axios.all to combine our two requests and then spread the responses into one....
-    axios.all([requestOne, requestTwo]).then(
-      axios.spread((...responses) => {
-        const response = [
-          ...responses[0].data.results[0].members,
-          ...responses[1].data.results[0].members,
-        ];
+    fetch(url)
+    .then((response) => response.json())
+    .then((ourdata) => setPoliticianInfo(ourdata, ...politicianInfo))
+}
 
-        //If a search parameter is present in the URL, we need to sort our response to pull that politician to the very top
-        if (search) {
-          response.sort((a, b) => {
-            let wholenameA =
-              a.first_name.toLowerCase() + " " + a.last_name.toLowerCase();
-            let wholenameB =
-              b.first_name.toLowerCase() + " " + b.last_name.toLowerCase();
-            // Sort results by matching name with keyword position in name
-            if (
-              wholenameA.toLowerCase().indexOf(search.toLowerCase()) >
-              wholenameB.toLowerCase().indexOf(search.toLowerCase())
-            ) {
-              return -1;
-            } else if (
-              wholenameA.toLowerCase().indexOf(search.toLowerCase()) <
-              wholenameB.toLowerCase().indexOf(search.toLowerCase())
-            ) {
-              return 1;
-            }
-            return;
-          });
-        }
-        setPoliticianInfo(response);
-      })
-    );
-  }
 
   return (
     <div className="container-lg">

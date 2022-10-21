@@ -3,9 +3,9 @@ import { TwitterTimelineEmbed } from "react-twitter-embed";
 
 function SocialMediaEmbed({politician}) {
   //Our dynamic data that our embed elements require
-  const youtubeVidSrc = `https://www.youtube.com/embed?max-results=1&controls=0&showinfo=0&rel=0&listType=user_uploads&list=${politician.youtube_account}`;
-  const facebookSRC = `https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2F${politician.facebook_account}&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId`;
-
+  const youtubeVidSrc = `https://www.youtube.com/embed?max-results=1&controls=0&showinfo=0&rel=0&listType=user_uploads&list=${politician.youtube}`;
+  const facebookSRC = `https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2F${politician.facebook}&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId`;
+  console.log(facebookSRC)
   return (
     <>
       <div
@@ -26,7 +26,7 @@ function SocialMediaEmbed({politician}) {
         >
           <TwitterTimelineEmbed
             sourceType="profile"
-            screenName={politician.twitter_account}
+            screenName={politician.twitter}
             options={{ height: 1200 }}
             className="mb-3"
           />
@@ -35,19 +35,22 @@ function SocialMediaEmbed({politician}) {
           className="col-12 col-md-6 mt-3 mb-3"
           style={{ textAlign: "center", margin: "auto" }}
         >
-          <iframe
-            title={facebookSRC}
-            src={facebookSRC}
-            width="500"
-            height="600"
-            style={{ border: "none", overflow: "hidden" }}
-            scrolling="no"
-            frameBorder="0"
-            allowFullScreen={true}
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          ></iframe>
+          {politician.facebook && (
+                      <iframe
+                      title={facebookSRC}
+                      src={facebookSRC}
+                      width="500"
+                      height="600"
+                      style={{ border: "none", overflow: "hidden" }}
+                      scrolling="no"
+                      frameBorder="0"
+                      allowFullScreen={true}
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    ></iframe>
+          )}
+
           <div className="mt-3">
-            {politician.youtube_account && (
+            {politician.youtube && (
               <iframe
                 title={Math.random()}
                 width="600"

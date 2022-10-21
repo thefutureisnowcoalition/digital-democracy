@@ -5,7 +5,7 @@ import Demographics from "./demographics/Demographics";
 
 function DisplayCard({ politician }) {
   // Lets set a variable inside of each mapped politician to display a unique ID including the politician.id value from propublica. This corresponds with the ID unitedstates.io is looking for.
-  const imageURL = `https://theunitedstates.io/images/congress/450x550/${politician.id}.jpg`;
+  const imageURL = politician.image;
 
   //Set some unique background styling for each card component based on their party affiliation
   if (politician.party === "R") {

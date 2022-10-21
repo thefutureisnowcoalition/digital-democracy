@@ -42,7 +42,7 @@ function DataVisualizationFull({politician}) {
         >
           Votes With Party:{" "}
           <span style={{ color: "green" }}>
-            {politician.votes_with_party_pct}%
+            {politician.votes_with_party}%
           </span>{" "}
           of the time.
         </h5>
@@ -52,7 +52,7 @@ function DataVisualizationFull({politician}) {
         >
           Votes Against Party :{" "}
           <span style={{ color: "red" }}>
-            {politician.votes_against_party_pct}%
+            {politician.votes_against_party}%
           </span>{" "}
           of the time.
         </h5>
