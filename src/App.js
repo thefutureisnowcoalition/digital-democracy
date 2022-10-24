@@ -7,7 +7,7 @@ import PoliticianComparison from './components/features/PoliticianComparison/Pol
 import SignUp from './components/sign-up/SignUp';
 import Dashboard from './components/features/Dashboard/Dashboard';
 import PoliticianProfile from './components/features/PoliticianProfile/ProfileFull';
-import Nav from './components/Nav/Nav'
+import Navigation from './components/Nav/Navigation'
 import DistrictMapPage from './components/features/DistrictMap/DistrictMapPage';
 import Donations from './components/features/Donations/Donations';
 
@@ -15,7 +15,7 @@ import Donations from './components/features/Donations/Donations';
 function App() {
   return (
     <BrowserRouter>
-      <Nav />
+      <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/comparison/" element={<PoliticianComparison />} />

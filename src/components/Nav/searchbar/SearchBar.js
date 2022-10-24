@@ -90,7 +90,7 @@ toggle between hiding and showing the dropdown content */
         <form onSubmit={() => navigate(linkRoute)}>
           <input
             type="text"
-            placeholder="Search politicians, or by address"
+            placeholder="Search politicians, or by address..."
             id="myInput"
             onChange={handleChange}
             value={searchText.text}
