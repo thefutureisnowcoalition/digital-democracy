@@ -1,10 +1,37 @@
 import React from 'react'
+import CanvasJSReact from '../../../../lib/canvasjs.react'
+
+
 
 function DataVisualizationFull({politician}) {
+
+  // console.log(politician.votes_with_party);
+   var CanvasJS =  CanvasJSReact.CanvasJS;
+   var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+  const options = {
+    animationEnabled: true,
+    exportEnabled:true,
+    theme:{
+     text: "Voted Within Party Vs. Outside"
+    },
+    data: [{
+     type: "doughnut",
+     indexLabel: "{label}:{y}%",
+     startAngle: -90,
+     dataPoints: [
+       {y:20, label:
+       "Votes with party"},
+       {y:10, label:
+       "Votes against party"}
+     ]
+    }]
+   }
+
   return (
     <div className="col-12" style={{ textAlign: "center" }}>
     <h3 className="mt-5">Voting History</h3>
-
+   
     <div className="row">
       <div className="col-12 col-lg-6 mt-4">
         <h5
@@ -35,6 +62,8 @@ function DataVisualizationFull({politician}) {
           </span>
         </h5>
       </div>
+   
+
       <div className="col-12 col-lg-6 mt-4">
         <h5
           className="mt-3"
@@ -58,7 +87,11 @@ function DataVisualizationFull({politician}) {
         </h5>
       </div>
     </div>
+    <div>
+    <CanvasJSChart options = {options} /> 
+    </div>
   </div>
+  
   )
 }
 
