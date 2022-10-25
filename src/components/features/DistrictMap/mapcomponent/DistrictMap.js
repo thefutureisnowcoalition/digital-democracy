@@ -118,7 +118,7 @@ function DistrictMap({locationString = "None"}) {
                 type: 'symbol',
                 source: 'stateupper',
                 layout: {
-                    'text-field': ['concat', ['get', 'STATEFP'], '-', ['get', 'SLDLST']]
+                    'text-field': ['concat', ['get', 'STATEFP'], '-', ['get', 'SLDUST']]
                 }
                 }
             );
