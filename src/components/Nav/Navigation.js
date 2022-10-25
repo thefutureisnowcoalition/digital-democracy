@@ -32,7 +32,7 @@ function Navigation() {
             navbarScroll
           >
             <Nav.Link className="home-link" href="/">Home</Nav.Link>
-            <Nav.Link className="p.c.f-link" href="/comparison">P.C.F</Nav.Link>
+            <Nav.Link className="pcf-link" href="/comparison">P.C.F</Nav.Link>
             <NavDropdown className="profile-link" title="Profile" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
@@ -48,6 +48,7 @@ function Navigation() {
             </Nav.Link> */}
           </Nav>
           <SearchBar />
+            
           {/* <Form className="d-flex">
             <Form.Control
               type="search"
@@ -55,7 +56,6 @@ function Navigation() {
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="outline-success">Search</Button> */}
           {/* </Form> */}
         </Navbar.Collapse>
       </Container>

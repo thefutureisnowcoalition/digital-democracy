@@ -1,3 +1,5 @@
+
+
 .me-auto my-2 my-lg-0{
   background-color: transparent;
 }
@@ -23,11 +25,11 @@
   color: black;
   font-size: 20px;
 }
-.p.c.f-link{
+.pcf-link{
   color: black;
   font-size: 20px;
 }
-.profile-link{
-  color: black;
+#navbarScrollingDropdown {
+  color: black ;
   font-size: 20px;
 }
