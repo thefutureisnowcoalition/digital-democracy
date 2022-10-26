@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import names from "./searchNames";
+import Button from "react-bootstrap/Button";
+import { BiSearchAlt } from 'react-icons/bi'
 
 import "./SearchBar.css";
 
@@ -86,11 +88,12 @@ toggle between hiding and showing the dropdown content */
   return (
     <>
       {/* Search Results Container */}
-      <div className="dropdown">
+      <div>
         <form onSubmit={() => navigate(linkRoute)}>
           <input
+            className="search-bar"
             type="text"
-            placeholder="Search politicians, or by address"
+            placeholder="Search politicians, or by address..."
             id="myInput"
             onChange={handleChange}
             value={searchText.text}
@@ -112,12 +115,15 @@ toggle between hiding and showing the dropdown content */
                   </Link>
                 );
               })}
-          </div>
+         </div>
+      <Link to={linkRoute} onClick={clearSearchText} >
+        <button className="search-btn" variant="outline-success">
+          <BiSearchAlt />
+          Search
+        </button>
+      </Link>
         </form>
       </div>
-      <Link to={linkRoute} onClick={clearSearchText} className="btn text-white">
-        Search
-      </Link>
     </>
   );
 }
