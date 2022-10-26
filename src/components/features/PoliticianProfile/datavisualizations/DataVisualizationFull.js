@@ -10,7 +10,26 @@ function DataVisualizationFull({politician}) {
    var CanvasJSChart = CanvasJSReact.CanvasJSChart;
    var CanvasJS =  CanvasJSReact.CanvasJS;
 
-  const options = {
+  const options2 = {
+    animationEnabled: true,
+    exportEnabled:true,
+    theme:{
+     text: "Missed Votes"
+    },
+    data: [{
+     type: "pie",
+     indexLabel: "{label}:{y}",
+     startAngle: -90,
+     dataPoints: [
+       {y:politician.missed_votes, label:
+       "Missed Votes"},
+       {y:politician.total_votes, label:
+       "Total Votes"}
+     ]
+    }]
+   }
+
+   const options = {
     animationEnabled: true,
     exportEnabled:true,
     theme:{
@@ -35,7 +54,7 @@ function DataVisualizationFull({politician}) {
    
     <div className="row">
       <div className="col-12 col-lg-6 mt-4">
-        <h5
+        {/* <h5
           className="mt-3"
           style={{ textAlign: "center" }}
         >
@@ -61,35 +80,43 @@ function DataVisualizationFull({politician}) {
           <span style={{ color: "red" }}>
             {politician.missed_votes_pct}
           </span>
-        </h5>
+        </h5> */}
+
+<h5
+          
+          style={{ textAlign: "center" }}
+        >
+          Votes Missed:{" "}
+          <span style={{ color: "red" , padding: 0}}>
+            {politician.missed_votes_pct}%
+          </span>
+        </h5> 
+        
+        <CanvasJSChart options={options2} /> 
+
+      
       </div>
    
 
       <div className="col-12 col-lg-6 mt-4">
-        <h5
-          className="mt-3"
+
+      <h5
+          
           style={{ textAlign: "center" }}
         >
-          Votes With Party:{" "}
+          Votes In Party:{" "}
           <span style={{ color: "green" }}>
             {politician.votes_with_party}%
           </span>{" "}
-          of the time.
+
         </h5>
-        <h5
-          className="mt-3 mb-5"
-          style={{ textAlign: "center" }}
-        >
-          Votes Against Party :{" "}
-          <span style={{ color: "red" }}>
-            {politician.votes_against_party}%
-          </span>{" "}
-          of the time.
-        </h5>
+
+      <CanvasJSChart options={options} /> 
+    
       </div>
     </div>
     <div>
-    <CanvasJSChart options={options} /> 
+
     </div>
   </div>
   
