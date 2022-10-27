@@ -58,6 +58,11 @@ function Home() {
                 Donations
               </Link>
             </li>
+            <li className="list-group-item">
+              <Link className="link-info" to="/feed">
+                Bill Feed
+              </Link>
+            </li>
 
           </ul>
         </div>
