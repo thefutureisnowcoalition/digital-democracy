@@ -3,9 +3,9 @@ import React from 'react'
 function DataVisualizationFull({politician}) {
   return (
     <div className="col-12" style={{ textAlign: "center" }}>
-    <h3 className="mt-5">Voting History</h3>
+    <h3 className="votingHistory">Voting History</h3>
 
-    <div className="row">
+    <div className="politicanVote">
       <div className="col-12 col-lg-6 mt-4">
         <h5
           className="mt-3"
