@@ -117,7 +117,7 @@ function Home() {
               </Card.Body>
             </Card>
           </Card.Link>
-          
+
           {/* Dashboard */}
 
           <Card.Link className="card-link" href="/dashboard">
@@ -139,7 +139,7 @@ function Home() {
               style={{ width: "18rem", marginBottom: "1%", height: "200px" }}
             >
               <Card.Body>
-                <Card.Title>Disrict Map</Card.Title>
+                <Card.Title>District Map</Card.Title>
               </Card.Body>
             </Card>
           </Card.Link>
