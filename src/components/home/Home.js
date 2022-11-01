@@ -1,5 +1,7 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import Card from "react-bootstrap/Card";
+import "../home/home.css";
 
 function Home() {
 
@@ -24,7 +26,8 @@ function Home() {
         </svg>
         <p>Application currently under construction.</p>
       </div>
-      <div className="row">
+
+      {/* <div className="row">
         <div className="col-12 col-sm-6">
           <div className="card-header mt-5">
             <h4>Features</h4>
@@ -58,7 +61,6 @@ function Home() {
                 Donations
               </Link>
             </li>
-
           </ul>
         </div>
 
@@ -76,6 +78,85 @@ function Home() {
               </Link>
             </li>
           </ul>
+        </div>
+      </div> */}
+
+      {/*  ||||||||||| new feature section here using react Bootstrap ||||||||||||*/}
+
+      <div className="card-header mt-5 mb-3" style={{ textAlign: "center" }}>
+        <h4>FEATURES</h4>
+      </div>
+      <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            flexWrap: "wrap",
+          }}>
+          {/* Politician Comparision */}
+
+          <Card.Link className="card-link" href="/comparison">
+            <Card
+              className="card-styles"
+              style={{ width: "18rem", marginBottom: "1%", height: "200px" }}
+            >
+              <Card.Body>
+                <Card.Title>Politician Comparison</Card.Title>
+              </Card.Body>
+            </Card>
+          </Card.Link>
+          {/* Politician Profile */}
+
+          <Card.Link className="card-link" href="/profile/Ted%20Cruz">
+            <Card
+              className="card-styles"
+              style={{ width: "18rem", marginBottom: "1%", height: "200px" }}
+            >
+              <Card.Body>
+                <Card.Title>Politician Profile</Card.Title>
+              </Card.Body>
+            </Card>
+          </Card.Link>
+          
+          {/* Dashboard */}
+
+          <Card.Link className="card-link" href="/dashboard">
+            <Card
+              className="card-styles"
+              style={{ width: "18rem", marginBottom: "1%", height: "200px" }}
+            >
+              <Card.Body>
+                <Card.Title>Dashboard</Card.Title>
+              </Card.Body>
+            </Card>
+          </Card.Link>
+
+          {/* Disrict Map */}
+
+          <Card.Link className="card-link" href="/districtmap">
+            <Card
+              className="card-styles"
+              style={{ width: "18rem", marginBottom: "1%", height: "200px" }}
+            >
+              <Card.Body>
+                <Card.Title>Disrict Map</Card.Title>
+              </Card.Body>
+            </Card>
+          </Card.Link>
+
+          {/* Donation */}
+
+          <Card.Link className="card-link" href="/donations">
+            <Card
+              className="card-styles"
+              style={{ width: "18rem", marginBottom: "1%", height: "200px" }}
+            >
+              <Card.Body>
+                <Card.Title>Donations</Card.Title>
+              </Card.Body>
+            </Card>
+          </Card.Link>
+
         </div>
       </div>
     </div>
