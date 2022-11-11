@@ -27,8 +27,10 @@ function DisplayCard({ politician }) {
           />
         </div>
         <div
-          className="col-12 col-md-6 col-6"
-          style={{ textAlign: "center", paddingTop: "90px" }}
+           className="col-12 col-md-6 col-6"
+
+          style={{ textAlign: "right",width: "100px, height: 100px" }}
+          
         >
           <DataVisualizationSpace politician={politician} />
         </div>

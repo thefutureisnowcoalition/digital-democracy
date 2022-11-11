@@ -1,0 +1,9 @@
+ #header__socials{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.8rem;
+    height:max-content;
+    width: 16;
+    position: absolute;
+}
