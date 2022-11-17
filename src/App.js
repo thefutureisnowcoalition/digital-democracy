@@ -10,6 +10,7 @@ import PoliticianProfile from './components/features/PoliticianProfile/ProfileFu
 import Navigation from './components/Nav/Navigation'
 import DistrictMapPage from './components/features/DistrictMap/DistrictMapPage';
 import Donations from './components/features/Donations/Donations';
+import BillFeed from './components/features/BillFeed/BillFeed';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/dashboard/:address" element={<Dashboard />} />
         <Route path="/districtmap" element={<DistrictMapPage />} />
         <Route path="/donations" element={<Donations />} />
+        <Route path="/feed" element={<BillFeed />} />
 
       </Routes>
     </BrowserRouter>
