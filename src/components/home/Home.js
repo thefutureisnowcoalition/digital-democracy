@@ -80,6 +80,11 @@ function Home() {
                 Signup
               </Link>
             </li>
+            <li className="list-group-item">
+              <Link className="link-info" to="/login">
+                Login
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
