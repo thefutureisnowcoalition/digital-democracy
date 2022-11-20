@@ -13,8 +13,14 @@
 
 .card-title {
   text-align: center;
-  height: 170px;
-  display: flex;
+  /* height: 170px; */
+  /* display: flex; */
   align-items: flex-end;
   justify-content: space-around;
+}
+
+.card-img-bottom {
+  width:80%;
+  margin:auto;
+  margin-top:10px;
 }
