@@ -1,11 +1,11 @@
 import React from 'react'
-import Stripe from './stripe/Stripe'
 
 function Donations() {
   return (
     <>
-    <div className="mt-5" style={{textAlign: 'center'}}>Donations</div>
-    <Stripe />
+  <div className="mt-5" style={{textAlign: 'center'}}>
+    <button className="btn btn-primary">Donate</button>
+  </div>
     </>
   )
 }

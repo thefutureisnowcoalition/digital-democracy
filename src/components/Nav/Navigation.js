@@ -23,7 +23,6 @@ function Navigation() {
 
     <Navbar className="navigation" bg="transparent" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="#">Digital Democracy</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -31,7 +30,7 @@ function Navigation() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link className="home-link" href="/">Home</Nav.Link>
+            <Nav.Link className="home-link" href="/">Digital Democracy</Nav.Link>
             <Nav.Link className="pcf-link" href="/comparison">P.C.F</Nav.Link>
             <NavDropdown className="profile-link" title="Profile" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
