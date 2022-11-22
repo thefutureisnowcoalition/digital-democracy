@@ -13,6 +13,7 @@ function Home() {
 
   return (
     <div className="container-lg">
+
       {/*  ||||||||||| new feature section here using react Bootstrap ||||||||||||*/}
 
       <div className="card-header mt-5 mb-3" style={{ textAlign: "center" }}>
