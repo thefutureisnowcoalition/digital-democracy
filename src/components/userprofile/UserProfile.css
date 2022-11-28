@@ -1,8 +1,55 @@
+.profile{
+  font-size: 20px;
+  margin-left: 630px;
+  font-weight: 700;
+}
+
 .container{
-  border: black;
+  border-style: ridge;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  width: 50%;
+  margin-bottom: 30px;
 }
 
 .update{
-  background-color: blue;
-  padding: 10px 80px;
+  background-color: #9370DB;
+  padding: 12px 80px;
+  color: white;
+  border-radius: 2px;
+  margin-bottom: 30px;
+  border: none;
+  font-weight: 700;
+}
+
+h3{
+  font-weight: 800;
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+
+.info{
+  margin-bottom: 20px;
+}
+.interest{
+  border-top-style: ridge;
+  padding-top: 30px;
+}
+.box{
+  border-bottom-style: ridge;
+}
+
+.signout{
+  margin-top: 30px;
+  margin-bottom: 25px;
+  background-color: #F0F0F0;
+  padding: 8px 18px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
+}
+
+.location{
+  padding-top: 30px;
 }

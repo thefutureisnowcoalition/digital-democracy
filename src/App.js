@@ -19,6 +19,7 @@ function App() {
   const [user, setLoginUser] = useState({
 
   })
+  console.log(user)
   return (
     <BrowserRouter>
       <Navigation />
