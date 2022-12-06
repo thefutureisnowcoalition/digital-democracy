@@ -1,67 +1,99 @@
-import React,{useState} from 'react'
+import React,{useState, useRef} from 'react';
 import axios from 'axios';
-import {useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
+import GoogleLoginComponent from '../../sign-up/signupcomponent/GoogleLogin';
 
 function LoginComponent ({setLoginUser}) {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [user,setUser] = useState({
         name:"",
         password: ""
-    })
+    });
+    const recaptchaRef = useRef(null);
+
     const handleChange = e =>{
-        const {name,value} = e.target
+        const {name,value} = e.target;
         setUser({
         ...user,//spread operator 
         [name]:value
-        })
-    };
+        });
+    }
 
     const navigateToHome = ()=>{
-        navigate('/')
-    };        
+        navigate('/');
+    }
+    
+    const handleRecaptcha = async (e) => {
+        e.preventDefault();
+        const token = await recaptchaRef.current.executeAsync();
+        console.log(token);
+        recaptchaRef.current.reset();
+        await axios.post("http://localhost:8000/recaptcha", {token})
+        .then(res =>  console.log(res))
+        .catch((error) => {
+        console.log(error);
+        })
+    }
 
     const login =()=>{
+        console.log("logging in");
         axios.post("http://localhost:8000/login",user)
         .then(res=>{
             alert(res.data.message);
-            setLoginUser(res.data.user);
-            navigateToHome();
-        })
-    };
+            if (res.data.message === "login success"){
+                setLoginUser(res.data.user);
+                navigateToHome();
+            }
+            })
+    }
 
     return (
-        <div class="row text-center">
-            <div class="col-md-12">
+        <div className="row text-center">
+            <div className="col-md-12">
                 Login To Your Account
             </div>
-            <div class="form-group row">
+            <div className="container w-25" >
+                <GoogleLoginComponent setLoginUser={setLoginUser}>
+                </GoogleLoginComponent>
+            </div>
+            <div className="form-group row">
                 <form action="#" autoComplete="off">
-                    <div class= "container w-25">
-                        <div class="input-group col-xs-4">
-                            <input type="text" class="form-control" name="email" value={user.email}  onChange={handleChange} placeholder="Your email"/>
+                    <p>
+                        Or enter email and password
+                    </p>
+                    <div className= "container w-25">
+                        <div className="input-group col-xs-4">
+                            <input type="text" autoComplete="email" className="form-control" name="email" value={user.email}  onChange={handleChange} placeholder="Your email"/>
                         </div>
                     </div>
-                    <div class="container w-25">
-                        <div class="input-group col-xs-4">
-                            <input type="password" class="form-control" name="password" value={user.password}  onChange={handleChange} placeholder="Your password"/>
+                    <div className="container w-25">
+                        <div className="input-group col-xs-4">
+                            <input type="password" autoComplete="current-password" className="form-control" name="password" value={user.password}  onChange={handleChange} placeholder="Your password"/>
                         </div>
                     </div>
-                    <div class="container">
-                        <div class="container">
-                            <a href="#" class="link-primary">
+                    <div className="container">
+                        <div className="container">
+                            <a href="#" className="link-primary">
                                 Forgot Your Password?
                             </a>
                         </div>
                     </div>
-                    <div class="container">
-                        <button type="submit" onClick={() => login()}>
+                    <div className="container">
+                        <ReCAPTCHA
+                            size="invisible"
+                            sitekey="6Lf02yQjAAAAACG2joKuBxO9nGQBjTvBmHpU4AY_"
+                            ref={recaptchaRef}
+                            onChange={login}
+                        />
+                        <button type="submit" onClick={handleRecaptcha}>
                             Login
                         </button>
                     </div>
                 </form>
             </div>
-            <div class="col-md-12">
-                <button type="button" class="btn btn-link" onClick={() => navigate('/signup')}>
+            <div className="col-md-12">
+                <button type="button" className="btn btn-link" onClick={() => navigate('/signup')}>
                     Don't have an account?
                 </button>
             </div>
