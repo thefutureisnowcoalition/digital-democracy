@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Politician = require('../models/Politician');
 const User = require('../models/User');
+const axios = require('axios');
 
 //Routes
 //Get ALL politicians from database
@@ -72,28 +73,29 @@ router.post("/login",(req,res)=>{
     User.findOne({email:email},(err,user)=>{
         if(user){
            if(password === user.password){
-               res.send({message:"login sucess",user:user})
+               res.send({message:"login success",user:user})
            }else{
                res.send({message:"wrong credentials"})
            }
         }else{
-            res.send("user does not exist for this email address")
+            res.send({message:"user does not exist for this email address"})
         }
     })
 });
 router.post("/signup",(req,res)=>{
-    console.log(req.body) 
+  console.log("signup api call");
+    console.log(req.body);
     const {name,email,password, address, zipcode, interests} =req.body;
     User.findOne({email:email},(err,user)=>{
         if(user){
-            res.send({message:"a user exists with this email address is already"})
+            res.send({message:"a user already exists with this email address"});
         }else {
-            const user = new User({name,email,password, address, zipcode, interests})
+            const user = new User({name,email,password, address, zipcode, interests});
             user.save(err=>{
                 if(err){
-                    res.send(err)
+                    res.send(err);
                 }else{
-                    res.send({message:"sign up sucessfull"})
+                    res.send({message:"sign up sucessfull"});
                 }
             })
         }
@@ -101,5 +103,22 @@ router.post("/signup",(req,res)=>{
 
 
 })
+
+router.post("/recaptcha", async (req, res) => {
+      console.log("recaptcha api call");
+      const {token} = req.body;
+
+      // secret key is exposed
+      await axios.post(
+        `https://www.google.com/recaptcha/api/siteverify?secret=6Lf02yQjAAAAAN4sUzP_o3PnlLLppjAfhA56IvnL&response=${token}`
+        );
+        
+        if (res.status(200)) {
+          res.send("Human 👨 👩");
+      }else{
+        res.send("Robot 🤖");
+      }
+  });
+  
 
   module.exports = router;

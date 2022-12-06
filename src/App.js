@@ -25,7 +25,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/comparison/" element={<PoliticianComparison />} />
         <Route path="/profile/:search" element={<PoliticianProfile />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp setLoginUser={setLoginUser}/>} />
         <Route path="/login" element={<Login setLoginUser={setLoginUser} />}/>
         <Route path="/dashboard/" element={<Dashboard />} />
         <Route path="/dashboard/:address" element={<Dashboard />} />

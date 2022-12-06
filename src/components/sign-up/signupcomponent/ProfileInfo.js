@@ -1,58 +1,109 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import axios from "axios";
+import ReCAPTCHA from "react-google-recaptcha";
+import GoogleLoginComponent from './GoogleLogin';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
-function ProfileInfo({user, setUser, page, setPage}){
+function ProfileInfo({user, setUser, page, setPage, setLoginUser}){
+
+    const recaptchaRef = useRef(null);
+
     const handleChange = e =>{
-        const {name,value} = e.target
+        const {name,value} = e.target;
         setUser({
         ...user,//spread operator 
         [name]:value
-        })
-    };
+        });
+    }
 
+    const handleRecaptcha = async (e) => {
+      e.preventDefault();
+      const token = await recaptchaRef.current.executeAsync();
+      console.log(token);
+      recaptchaRef.current.reset();
+      await axios.post("http://localhost:8000/recaptcha", {token})
+      .then(res =>  console.log(res))
+      .catch((error) => {
+      console.log(error);
+      })
+  }
+
+    const isValidEmail = (email) => {
+      return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+    }
+
+    const [passwordScore, setPasswordScore] = useState(0);
+
+    const onChangeScore = (score, feedback) => {
+      setPasswordScore(score);
+    }
     const signup = ()=>{
-      const {name,email,password, address, interests} = user
+      const {name,email,password} = user;
       if (name && email && password){
-        axios.post("http://localhost:8000/signup",user )
-        .then(res=>console.log(res))
-        setPage(page + 1)
+        if (!isValidEmail(email)){
+            alert("Plese enter a valid email")
+        }
+        else if (passwordScore < 2){
+          alert("Plese enter a valid password")
+        }
+        else {
+          axios.post("http://localhost:8000/signup",user )
+          .then(res=>{
+            console.log(res.data.message);
+            if (res.data.message && res.data.message === "sign up sucessfull"){
+              setPage(page + 1);
+            }
+          })
+        }
       }
       else{
-          alert("invalid input")
+          alert("Please fill out all fields")
       }
-      setPage(page + 1)
     };
 
     return ( 
-        <div class="row text-center">
-            <div class="col-md-12">
+        <div className="row text-center">
+            <div className="container w-25">
+              <GoogleLoginComponent setLoginUser={setLoginUser}>
+              </GoogleLoginComponent>
+            </div>
+            <div className="col-md-12">
                 Create a new account
             </div>
-            <span class="col-md-12">
+            <span className="col-md-12">
                 Already have an account?
-                <a href="/login" class="link-primary">
+                <a href="/login" className="link-primary">
                     Login
                 </a>
             </span>
-            <div class="col-md-12">
+            <div className="col-md-12">
                 <form action="#">
-                    <div class="container w-25">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="name" value={user.name} onChange={handleChange} placeholder="Full Name"/>
+                    <div className="container w-25">
+                        <div className="input-group">
+                            <input type="text" autoComplete="name" className="form-control" name="name" value={user.name} onChange={handleChange} placeholder="Full Name"/>
                         </div>
                       </div>
-                      <div class="container w-25">
-                        <div class="input-group">
-                          <input type="text" class="form-control" name="email" value={user.email} onChange={handleChange} placeholder="Email"/>
+                      <div className="container w-25">
+                        <div className="input-group">
+                          <input type="text" autoComplete="email" className="form-control" name="email" value={user.email} onChange={handleChange} placeholder="Email"/>
                         </div>
                       </div>
-                      <div class="container w-25">
-                        <div class="input-group">
-                          <input type="password" class="form-control" name="password" value={user.password} onChange={handleChange} placeholder="password"/>
+                      <div className="container w-25">
+                        <div className="input-group">
+                          <input type="password" autoComplete="new-password" className="form-control" name="password" value={user.password} onChange={handleChange} placeholder="password"/>
                         </div>
+                        <PasswordStrengthBar 
+                            password={user.password}
+                            onChangeScore={onChangeScore} />
                       </div>
-                      <div class="container">
-                        <button type="submit" onClick={signup} >
+                      <div className="container">
+                        <ReCAPTCHA
+                            size="invisible"
+                            sitekey="6Lf02yQjAAAAACG2joKuBxO9nGQBjTvBmHpU4AY_"
+                            ref={recaptchaRef}
+                            onChange={signup}
+                        />
+                        <button type="submit" onClick={handleRecaptcha} >
                           Sign up
                         </button>
                       </div>

@@ -7,29 +7,29 @@ function Address({user, setUser, page, setPage}){
 
         clearSuggestions();
         const storeSuggestions = function (predictions, status) {
-            if (status != window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
+            if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
               alert(status);
               return;
             }
         
-            const dropdownlist = document.getElementById('dropdownlist')
+            const dropdownlist = document.getElementById('dropdownlist');
             predictions.forEach((prediction) => {
-                var item = document.createElement('li')
-                item.setAttribute('class', 'list-group-item');
+                var item = document.createElement('li');
+                item.className = 'list-group-item';
                 item.addEventListener('click',handleSelection);
-                item.appendChild(document.createTextNode(prediction.description))
-                dropdownlist.appendChild(item)
+                item.appendChild(document.createTextNode(prediction.description));
+                dropdownlist.appendChild(item);
             });
           };
 
         const autocomplete = new window.google.maps.places.AutocompleteService();
         autocomplete.getPlacePredictions({ input: input, types: ["address"] }, storeSuggestions);
         
-        console.log('added dropdown')
+        console.log('added dropdown');
     }
 
     function clearSuggestions() {
-        const dropdownlist = document.getElementById('dropdownlist')
+        const dropdownlist = document.getElementById('dropdownlist');
         while (dropdownlist.firstChild) {
             dropdownlist.removeChild(dropdownlist.firstChild);
         }
@@ -44,8 +44,10 @@ function Address({user, setUser, page, setPage}){
     function hideDropdown() {
         console.log("Hiding Dropdown");
         var dropdown = document.getElementById("suggestions");
-        dropdown.classList.add("hide");
-        dropdown.classList.remove("show");
+        if (dropdown){
+            dropdown.classList.add("hide");
+            dropdown.classList.remove("show");
+        }
       }
 
     const handleChange = e =>{
@@ -54,8 +56,8 @@ function Address({user, setUser, page, setPage}){
         ...user,//spread operator 
         [name]:value
         });
-        if (name == "address"){
-            if (value == ""){
+        if (name === "address"){
+            if (value === ""){
                 clearSuggestions();
             }
             else {
@@ -66,20 +68,20 @@ function Address({user, setUser, page, setPage}){
     };
 
     const handleClick = e => {
-        const {name,value} = e.target;
-        if (name == "address"){
+        const {name} = e.target;
+        if (name === "address"){
             setUser({
                 ...user,//spread operator 
                 zipcode: ""
                 });
             deployDropdown();
         }
-        if (name == "zipcode"){
+        if (name === "zipcode"){
             clearSuggestions();
             setUser({
                 ...user,//spread operator 
                 address: ""
-                })
+                });
         }
     };
 
@@ -89,58 +91,54 @@ function Address({user, setUser, page, setPage}){
         ...user,//spread operator 
         address:value
         });
-        console.log("selection made")
+        console.log("selection made");
     }
 
-
-    window.onclick = e => {
-        const {name,value} = e.target;
-        if (name == "address"){
+    const windowOnclick = e => {
+        const {name} = e.target;
+        if (name === "address"){
             return;
         }
         else {
             hideDropdown();
         }
-      };
+    }
+    window.onclick = windowOnclick;
     
     const next = () => {
         if (user.address || user.zipcode){
-            setPage(page + 1)
+            window.onclick = null;
+            setPage(page + 1);
+
         }
         else {
             alert("Invalid input")
         }
     };
-    const previous = () => {
-        setPage(page - 1)
-    };
 
     return ( 
-        <div class="row text-center">
-            <div class="col-md-12">
+        <div className="row text-center">
+            <div className="col-md-12">
                 <form action="#">
-                    <div class="container w-25 position-relative">
+                    <div className="container w-25 position-relative">
                         <div>
                             Full Street Address
                         </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="address" value={user.address} onClick={handleClick} onChange={handleChange} placeholder="Street Address"/>
+                        <div className="input-group">
+                            <input type="text" className="form-control" name="address" value={user.address} onClick={handleClick} onChange={handleChange} placeholder="Street Address"/>
                         </div>
-                        <div id="suggestions" class="position-absolute w-100">
-                            <ul id="dropdownlist" class="list-group">
+                        <div id="suggestions" className="position-absolute w-100">
+                            <ul id="dropdownlist" className="list-group">
                             </ul>
                         </div>
                         <div>
                             Or ZIP Code only for limited features
                         </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="zipcode" value={user.zipcode} onClick={handleClick} onChange={handleChange} placeholder="ZIP Code"/>
+                        <div className="input-group">
+                            <input type="text" className="form-control" name="zipcode" value={user.zipcode} onClick={handleClick} onChange={handleChange} placeholder="ZIP Code"/>
                         </div>
                       </div>
-                      <div class="container">
-                        <button type="submit" onClick={previous} >
-                          Previous
-                        </button>
+                      <div className="container">
                         <button type="submit" onClick={next} >
                           Next
                         </button>
