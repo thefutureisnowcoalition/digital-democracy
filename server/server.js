@@ -10,19 +10,33 @@ const PORT = process.env.PORT || 8000;
 //Our MongoDB connection URI - Will need to be hidden in production! Contains our Login Name, Password, and directs us to the "Politicians" database.
 const MONGODB_URI = 'mongodb+srv://FincAdmin:DemocracyBackend135@digitaldemocracy.5lhi6nx.mongodb.net/Politicians?retryWrites=true&w=majority'
 
-mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+const connectDB = async () => {
+    try {
+        await mongoose.connect(MONGODB_URI);
+    } catch(err) {
+        console.error(err)
+    }
+}
 
-mongoose.connection.on('connected', () => {
-    console.log('Connected to DD database with MongoDB');
-})
+connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-app.use(cors());
+// domain needs to be updated
+const whitelist = ['http://localhost:3000'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 // HTTP request logger
 app.use(morgan('tiny'));
@@ -32,4 +46,7 @@ app.use('/login', require('../src/routes/login'));
 app.use('/signup', require('../src/routes/signup'));
 app.use('/recaptcha', require('../src/routes/recaptcha'));
 
-app.listen(PORT, console.log(`Server is starting at ${PORT}`));
+mongoose.connection.once('open', () => {
+    console.log('Connected to DD database with MongoDB');
+    app.listen(PORT, console.log(`Server is starting at ${PORT}`));
+})
