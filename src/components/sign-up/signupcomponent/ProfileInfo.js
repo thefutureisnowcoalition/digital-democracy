@@ -50,7 +50,7 @@ function ProfileInfo({user, setUser, page, setPage, setLoginUser}){
           axios.post("http://localhost:8000/signup",user )
           .then(res=>{
             console.log(res.data.message);
-            if (res.data.message && res.data.message === "sign up sucessfull"){
+            if (res.status === 201){
               setPage(page + 1);
             }
           })

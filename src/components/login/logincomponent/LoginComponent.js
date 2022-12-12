@@ -41,11 +41,14 @@ function LoginComponent ({setLoginUser}) {
         axios.post("http://localhost:8000/login",user)
         .then(res=>{
             alert(res.data.message);
-            if (res.data.message === "login success"){
+            if (res.status === 200){
                 setLoginUser(res.data.user);
                 navigateToHome();
             }
             })
+        .catch((error) => {
+            alert(error.response.data.message)
+        })
     }
 
     return (

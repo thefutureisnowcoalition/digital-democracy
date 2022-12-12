@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function Interests({user, setUser, page, setPage}){
@@ -16,14 +17,21 @@ function Interests({user, setUser, page, setPage}){
             });
     }
     
-    const updateInfo = () => {
+    const navigate = useNavigate();
+    const navigateToHome = ()=>{
+        navigate('/');
+    }
+
+    const updateInfo = async (e) => {
+        e.preventDefault();
         const {name,email,password} = user;
         if (name && email && password){
-          axios.put("http://localhost:8000/user",user )
-          .then(res=>console.log(res))
+            await axios.put("http://localhost:8000/user", user);
+            navigateToHome();
+            alert("Signup successful");
         }
         else{
-            alert("invalid input")
+            alert("Invalid input")
         }
     }
 

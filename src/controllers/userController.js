@@ -1,32 +1,25 @@
 const User = require('../models/User');
 
-const getAllUsers = (req, res) => {
-  
-    User.find({ })
-      .then((data) => {
-        res.json(data);
-      })
-      .catch((error) => {
-        console.log(error)
-      });
-  
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().exec();
+    res.json(users);
+  } catch(err) {
+    console.error(err)
+  }
 }
 
-const updateUser = (req, res) => {
-    const {name,email,password, address, zipcode, interests} =req.body;
-    User.updateOne({email: email}, { $set: {name: name, email: email, password: password, address: address, zipcode: zipcode, interests: interests}}).then(
-      () => {
-        res.status(201).json({
-          message: 'User updated successfully!'
-        });
-      }
-    ).catch(
-      (error) => {
-        res.status(400).json({
-          error: error
-        });
-      }
-    );
+// only updates address, zipcode, interests
+const updateUser = async (req, res) => {
+    const {email, address, zipcode, interests} =req.body;
+    try {
+      await User.updateOne({email: email}, { $set: {address: address, zipcode: zipcode, interests: interests}}).exec();
+      res.status(201).json({
+        message: 'User updated successfully'
+      });
+    } catch(err) {
+      console.error(err);
+    }
 }
 
 module.exports = {getAllUsers, updateUser}
