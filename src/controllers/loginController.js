@@ -9,8 +9,8 @@ const login = async (req,res)=>{
         const user = await User.findOne({email:email}).exec();
         if(user){
             if(password === user.password){
-                res.status(200).json({message:"Login success",user:user});
-            }else{
+                res.status(200).json({message:"Login success", user:user});
+            } else {
                 res.status(401).json({message: "Wrong credentials"});
             }
          } else {

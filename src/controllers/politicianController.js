@@ -1,12 +1,12 @@
 const Politician = require('../models/Politician');
 
 const getAllPoliticians = async (req, res) => {
-  try {
-    const politicians = await Politician.find().exec();
-    res.json(politicians);
-  } catch(err) {
-    console.error(err);
-  } 
+    try {
+        const politicians = await Politician.find().exec();
+        res.json(politicians);
+    } catch(err) {
+        console.error(err);
+    } 
 }
 
 // Get one politician
@@ -19,13 +19,13 @@ const getPolitician = async (req, res) => {
     ourlast = array[1];
 
     try {
-      const politician = await Politician.findOne(
-        {last_name: ourlast, first_name: ourfirst},
-        {_id:0}
-        ).exec();
-      res.json(politician);
+        const politician = await Politician.findOne(
+            {last_name: ourlast, first_name: ourfirst},
+            {_id:0}
+            ).exec();
+        res.json(politician);
     } catch(err) {
-      console.error(err);
+        console.error(err);
     }
 }
 

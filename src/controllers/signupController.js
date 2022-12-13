@@ -4,11 +4,11 @@ const signup = async (req,res)=>{
     const {name,email,password, address, zipcode, interests} =req.body;
     const user = await User.findOne({email:email}).exec();
     if (user) {
-        return res.status(409).json({message:"a user already exists with this email address"});
+        return res.status(409).json({message:"A user already exists with this email address"});
     }
     try {
         await User.create({name,email,password, address, zipcode, interests});
-        res.status(201).json({message:"sign up sucessfull"});
+        res.status(201).json({message:"Sign up sucessfull"});
     } catch(err) {
         console.error(err);
     }
